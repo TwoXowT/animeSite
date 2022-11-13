@@ -25,7 +25,7 @@ export const App = ()=> {
         API.fetchFilterData(page,filter)
             .then(animelist =>  {
                 setList(animelist.results)
-                setCurrentPage(animelist.currentPage)
+                setCurrentPage(Number(animelist.currentPage))
                 setHasNextPage(animelist.hasNextPage)
                 setIsLoading(false)
             })
@@ -37,7 +37,7 @@ export const App = ()=> {
         setIsLoading(true)
         API.fetchInputData(page,text).then(animelist=>{
             setList(animelist.results)
-            setCurrentPage(animelist.currentPage)
+            setCurrentPage(Number(animelist.currentPage))
             setHasNextPage(animelist.hasNextPage)
             setIsLoading(false)
         })
@@ -55,6 +55,7 @@ export const App = ()=> {
 
     const style = {
         pagination:{
+            paddingTop: '100px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -87,7 +88,8 @@ export const App = ()=> {
                         page={currentPage}
                         count={hasNextPage?(currentPage + 1):(currentPage)}
                         onChange={handleChange}
-                        boundaryCount={2}
+                        siblingCount={1}
+                        boundaryCount={3}
             />
         </Box>
 
