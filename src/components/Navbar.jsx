@@ -1,14 +1,25 @@
 import React from 'react';
-import {Box,IconButton} from "@mui/material";
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
-export const Navbar= (props)=>{
+import {Box, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 
-    console.log(props)
+export const Navbar = (props)=>{
+    const handleChange = (event)=>{
+        props.setFilter(event.target.value)
+    }
     return(
         <Box>
-            <IconButton
-                    children={TaskAltIcon}
-            />
+            This is Navbar
+            <FormControl fullWidth>
+                <InputLabel>Sort by</InputLabel>
+                <Select
+                    value={props.filter}
+                    label="variant"
+                    onChange={handleChange}
+                >
+                    <MenuItem value='popular'>popular</MenuItem>
+                    <MenuItem value='recent-release'>Recent</MenuItem>
+                    <MenuItem value='top-airing'>Top airing</MenuItem>
+                </Select>
+            </FormControl>
         </Box>
     )
 }
