@@ -8,7 +8,6 @@ export const AnimeList = (props)=>{
         flexFlow: 'row wrap'
 
     }
-    console.log('anime',props)
     return(
         <Container sx={style}>
 

@@ -23,7 +23,7 @@ export const Root = ()=>{
                 <Route exact path="/anime">
                     <App/>
                  </Route>
-                <Route exact path="/anime/:id">
+                <Route exact path="/anime/:mal_id">
                     <AnimePage/>
                 </Route>
                 <Route exact path="/profile">

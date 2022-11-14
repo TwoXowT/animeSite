@@ -9,14 +9,19 @@ export const App = ()=> {
 
     const [list,setList] = useState()
     const [isLoading,setIsLoading]= useState(true)
-    const [filter, setFilter] = useState('top-airing')
+    const [filter, setFilter] = useState('top')
     const [currentPage,setCurrentPage] = useState(1)
     const [hasNextPage, setHasNextPage] = useState(true)
 
+    useEffect(()=>{
+    },[])
 
     useEffect(()=>{
-        fetchFilterData(1,filter)
 
+        console.log('currentPage',currentPage)
+    },[currentPage])
+    useEffect(()=>{
+        fetchFilterData(1,filter)
 
     },[filter])
 
@@ -24,9 +29,9 @@ export const App = ()=> {
         setIsLoading(true)
         API.fetchFilterData(page,filter)
             .then(animelist =>  {
-                setList(animelist.results)
-                setCurrentPage(Number(animelist.currentPage))
-                setHasNextPage(animelist.hasNextPage)
+                setList(animelist.data)
+                setCurrentPage(Number(animelist.pagination.current_page))
+                setHasNextPage(animelist.pagination.has_next_page)
                 setIsLoading(false)
             })
 
@@ -36,9 +41,9 @@ export const App = ()=> {
     function fetchInputData(page,text){
         setIsLoading(true)
         API.fetchInputData(page,text).then(animelist=>{
-            setList(animelist.results)
-            setCurrentPage(Number(animelist.currentPage))
-            setHasNextPage(animelist.hasNextPage)
+            setList(animelist.data)
+            setCurrentPage(Number(animelist.pagination.current_page))
+            setHasNextPage(animelist.pagination.has_next_page)
             setIsLoading(false)
         })
 
@@ -46,9 +51,10 @@ export const App = ()=> {
 
 
     const handleChange = (event,page)=>{
-        console.log('PAGE',page)
         if(text){
+            console.log('page',page)
             fetchInputData(page,text)
+            return
         }
         fetchFilterData(page,filter)
     }
@@ -69,7 +75,6 @@ export const App = ()=> {
     }
     function handleKeyDown(e){
         if (e.key === "Enter") {
-            setFilter('')
             fetchInputData(1,text)
 
         }
@@ -80,7 +85,7 @@ export const App = ()=> {
 
         <input onChange={handleInput} onKeyDown={handleKeyDown}/>
 
-        <Navbar  filter = {filter} setFilter={setFilter}/>
+        {/*<Navbar  filter = {filter} setFilter={setFilter}/>*/}
 
         {!isLoading?(<AnimeList list={list}/>):(<h1>Loading...</h1>)}
         <Box sx={style.pagination}>

@@ -6,8 +6,8 @@ import {AnimePage} from "./AnimePage";
 
 export const AnimeCard = (props)=>{
 
-    let { path, url } = useRouteMatch();
 
+    let { path, url } = useRouteMatch();
     const style = {
         container: {
             width: '200px',
@@ -38,11 +38,11 @@ export const AnimeCard = (props)=>{
         <Box sx={style.container}>
             <Box component='img'
                  sx={style.image}
-                 src={props.item.image}
+                 src={props.item.images.jpg.image_url}
             />
             <Box sx={style.info_container}>
                 <Typography variant="h5" sx={style.title}>
-                    <Link to={`${url}/${props.item.id}`}>
+                    <Link to={`${url}/${props.item.mal_id}`}>
                         {props.item.title}
                     </Link>
                 </Typography>
@@ -51,7 +51,7 @@ export const AnimeCard = (props)=>{
                 </Typography>
             </Box>
             <Switch>
-                <Route path={`${path}/:${props.item.animeId}`} children={<AnimePage/>}/>
+                <Route path={`${path}/:${props.item.mal_id}`} children={<AnimePage/>}/>
             </Switch>
         </Box>
 
