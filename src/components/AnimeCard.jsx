@@ -1,54 +1,59 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Box, Container, Typography} from "@mui/material";
 import {Link, useRouteMatch, Switch,
     Route,} from "react-router-dom";
 import {AnimePage} from "./AnimePage";
 
 export const AnimeCard = (props)=>{
-
+    const [isHover, setIsHover] = useState(false)
 
     let { path, url } = useRouteMatch();
     const style = {
         container: {
             width: '200px',
-            height: '400px',
             padding: '10px 10px',
-        },
-
-        info_container:{
-            bgcolor: '#fafafa',
         },
 
         title:{
             width: 'inherit',
-            height: '50px',
             wordWrap: 'break-word',
         },
 
         image:{
             width: '200px',
             height: '300px',
-        }
+            transition: '0.4s',
+            filter: isHover ? ('brightness(70%)'):(''),
+        },
 
 
     }
 
+    function handleMouseEnter() {
+        setIsHover(true)
+    }
 
-    return(
+    function handleMouseLeave() {
+        setIsHover(false)
+    }
+
+return(
         <Box sx={style.container}>
-            <Box component='img'
-                 sx={style.image}
-                 src={props.item.images.jpg.image_url}
-            />
+            <Link to={`${url}/${props.item.mal_id}`}>
+                <Box component='img'
+                     onMouseEnter={handleMouseEnter}
+                     onMouseLeave={handleMouseLeave}
+                     sx={style.image}
+                     src={props.item.images.jpg.image_url}
+                />
+            </Link>
             <Box sx={style.info_container}>
-                <Typography variant="h5" sx={style.title}>
+                <Typography variant="p" sx={style.title}>
                     <Link to={`${url}/${props.item.mal_id}`}>
                         {props.item.title}
                     </Link>
                 </Typography>
-                <Typography variant="h1" sx={style.title}>
-                    {props.item.totalEpisodes}
-                </Typography>
+
             </Box>
             <Switch>
                 <Route path={`${path}/:${props.item.mal_id}`} children={<AnimePage/>}/>

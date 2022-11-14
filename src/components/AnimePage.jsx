@@ -4,7 +4,7 @@ import {
 } from "react-router-dom";
 import API from "../API";
 import {
-    Box,
+    Box, CircularProgress,
     Container,
     Rating, Table,
     TableBody,
@@ -162,7 +162,7 @@ export const AnimePage = () => {
         <>
             {!isLoading ? (
                 <Card/>
-            ) : (<h1>Loading...</h1>)}
+            ) : (<CircularProgress />)}
 
         </>
 

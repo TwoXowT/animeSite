@@ -1,7 +1,7 @@
 import './App.css';
 import React, {useEffect, useState} from "react";
 import {AnimeList} from "./components/AnimeList";
-import {Box, Pagination} from "@mui/material";
+import {Box, CircularProgress, Pagination} from "@mui/material";
 import {Navbar} from "./components/Navbar";
 import API from "./API";
 
@@ -87,7 +87,7 @@ export const App = ()=> {
 
         {/*<Navbar  filter = {filter} setFilter={setFilter}/>*/}
 
-        {!isLoading?(<AnimeList list={list}/>):(<h1>Loading...</h1>)}
+        {!isLoading?(<AnimeList list={list}/>):(<CircularProgress />)}
         <Box sx={style.pagination}>
             <Pagination
                         page={currentPage}
