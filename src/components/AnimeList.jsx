@@ -5,10 +5,11 @@ import {AnimeCard} from "./AnimeCard";
 export const AnimeList = (props)=>{
     const style = {
         display: 'flex',
-        flexFlow: 'row wrap'
+        flexFlow: 'row wrap',
+        justifyContent: 'center',
 
     }
-    console.log('anime',props)
+    console.log('animelist',props.list)
     return(
         <Container sx={style}>
 

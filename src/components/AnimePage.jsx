@@ -1,44 +1,168 @@
 import React, {useEffect, useState} from 'react';
-import {Box} from "@mui/material";
 import {
     useParams
 } from "react-router-dom";
-import {AnimeList} from "./AnimeList";
-export const AnimePage = ()=>{
-    let { id } = useParams();
-    const [isLoading,setIsLoading]= useState(true)
-    const [data,setData] = useState('')
+import API from "../API";
+import {
+    Box, CircularProgress,
+    Container,
+    Rating, Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography
+} from "@mui/material";
 
-    useEffect(()=>{
+export const AnimePage = () => {
+    let {mal_id} = useParams();
+    const [isLoading, setIsLoading] = useState(true)
+    const [data, setData] = useState()
+
+    useEffect(() => {
         setIsLoading(true)
-        fetch(`https://api.consumet.org/anime/gogoanime/info/${id}`)
-            .then((response) => response.json())
-            .then((animeDetails) => {
-                setData(animeDetails)
-                setIsLoading(false)
-            });
+        API.fetchAnimeInfo(mal_id).then(response => {
+            setData(response)
+            setIsLoading(false)
+        })
 
-    },[])
-    useEffect(()=>{
-        console.log(data)
-    },[data])
-    const Card = ()=>{
-        return(
+    }, [])
+    console.log(data)
+
+    const style = {
+
+        main_container: {
+
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+            flexFlow: 'column wrap',
+        },
+
+        container: {
+            display: 'flex',
+            flexFlow: 'row wrap',
+            justifyContent: 'center',
+
+        },
+
+        img_container:{
+            display: 'flex',
+            alignItems: 'center',
+        },
+
+        info_container: {
+            padding: '0px 20px',
+        },
+
+        rating: {
+            display: 'flex',
+            alignItems: 'center',
+        },
+
+
+    }
+
+    const Card = () => {
+        return (
             <>
-                <h1>{data.title}</h1>
-                <img alt='img' src={data.image}/>
-                <p>{data.synopsis}</p>
-                <ul>
-                    {data.genres.map(item=><li>{item}</li>)}
-                </ul>
+                <Container sx={style.main_container}>
+                    <h2>{data.title}</h2>
+                    <Box sx={style.container}>
+                        <Box sx={style.img_container}>
+                            <img alt='img' src={data.images.jpg.image_url}/>
+                        </Box>
+                        <Box sx={style.info_container}>
+
+                            <TableContainer sx={style.table_container}>
+                                <Table>
+
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell component="th" scope="row">
+                                                <b>Rating:</b>
+                                            </TableCell>
+                                            <TableCell align='left'>
+                                                {data.score}
+                                            </TableCell>
+                                        </TableRow>
+
+                                        <TableRow>
+                                            <TableCell component="th" scope="row">
+                                                <b>Airing:</b>
+                                            </TableCell>
+                                            <TableCell align='left'>
+                                                {data.aired.string}
+                                            </TableCell>
+                                        </TableRow>
+
+                                        <TableRow>
+                                            <TableCell component="th" scope="row">
+                                                <b>Status:</b>
+                                            </TableCell>
+                                            <TableCell align='left'>
+                                                {data.status}
+                                            </TableCell>
+                                        </TableRow>
+
+                                        <TableRow>
+                                            <TableCell component="th" scope="row">
+                                                <b>Producers:</b>
+                                            </TableCell>
+                                            <TableCell align='left'>
+                                                {data.producers.map(item => {
+                                                    return `${item.name}, `
+                                                })}
+                                            </TableCell>
+                                        </TableRow>
+
+                                        <TableRow>
+                                            <TableCell component="th" scope="row">
+                                                <b>Rank:</b>
+                                            </TableCell>
+                                            <TableCell align='left'>
+                                                {data.rating}
+                                            </TableCell>
+                                        </TableRow>
+
+
+                                        <TableRow>
+                                            <TableCell component="th" scope="row">
+                                                <b>Genres:</b>
+                                            </TableCell>
+                                            <TableCell align='left'>
+                                                {data.genres.map(item => {
+                                                    return `${item.name}, `
+                                                })}
+                                            </TableCell>
+                                        </TableRow>
+
+                                    </TableBody>
+                                </Table>
+
+                            </TableContainer>
+
+                        </Box>
+                    </Box>
+
+
+                    {/*<p>{data.synopsis}</p>*/}
+                    {/*<ul>*/}
+                    {/*    {data.genres.map(item=><li>{item}</li>)}*/}
+                    {/*</ul>*/}
+                    <h1>About anime</h1>
+                    <Typography>{data.synopsis}</Typography>
+                </Container>
+
             </>
         )
     }
     return (
         <>
-            {!isLoading?(
-               <Card/>
-            ):(<h1>Loading...</h1>)}
+            {!isLoading ? (
+                <Card/>
+            ) : (<CircularProgress />)}
 
         </>
 
