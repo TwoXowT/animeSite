@@ -1,33 +1,21 @@
 import {BrowserRouter, Link,  Route,Switch} from "react-router-dom";
 import {App} from "../App";
 import {AnimePage} from "./AnimePage";
+import {Navbar} from "./Navbar";
+import {SearchPage} from "./SearchPage";
 
 
 export const Root = ()=>{
 
-
-
     return(
         <BrowserRouter>
-            <div>
-                <ul>
-                    <li>
-                        <Link to='/anime'> AnimeList</Link>
-                    </li>
-                    <li>
-                        <Link to='/profile'> profile</Link>
-                    </li>
-                </ul>
-            </div>
+            <Navbar/>
             <Switch>
-                <Route exact path="/anime">
-                    <App/>
-                 </Route>
-                <Route exact path="/anime/:mal_id">
-                    <AnimePage/>
-                </Route>
-                <Route exact path="/profile">
-                    <h1>Profile</h1>
+                <Route exact={true} path="/anime" component={App}/>
+                <Route  path="/anime/:mal_id" component={AnimePage}/>
+                <Route  path="/search" component={SearchPage}/>
+                <Route >
+                   <h1>ERROR</h1>
                 </Route>
             </Switch>
         </BrowserRouter>

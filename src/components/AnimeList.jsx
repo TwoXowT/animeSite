@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Pagination} from "@mui/material";
+import {Box, Container, Pagination} from "@mui/material";
 import {AnimeCard} from "./AnimeCard";
 
 export const AnimeList = (props)=>{
@@ -9,7 +9,10 @@ export const AnimeList = (props)=>{
         justifyContent: 'center',
 
     }
-    console.log('animelist',props.list)
+
+
+
+
     return(
         <Container sx={style}>
 

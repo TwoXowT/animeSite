@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
-    useParams
+    useParams, useRouteMatch
 } from "react-router-dom";
 import API from "../API";
 import {
@@ -16,7 +16,9 @@ import {
 } from "@mui/material";
 
 export const AnimePage = () => {
+
     let {mal_id} = useParams();
+
     const [isLoading, setIsLoading] = useState(true)
     const [data, setData] = useState()
 

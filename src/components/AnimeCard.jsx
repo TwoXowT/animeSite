@@ -15,8 +15,7 @@ export const AnimeCard = (props)=>{
         },
 
         title:{
-            width: 'inherit',
-            wordWrap: 'break-word',
+            width: '100%',
         },
 
         image:{
@@ -39,7 +38,8 @@ export const AnimeCard = (props)=>{
 
 return(
         <Box sx={style.container}>
-            <Link to={`${url}/${props.item.mal_id}`}>
+
+            <Link to={`anime/${props.item.mal_id}`}>
                 <Box component='img'
                      onMouseEnter={handleMouseEnter}
                      onMouseLeave={handleMouseLeave}
@@ -49,14 +49,14 @@ return(
             </Link>
             <Box sx={style.info_container}>
                 <Typography variant="p" sx={style.title}>
-                    <Link to={`${url}/${props.item.mal_id}`}>
+                    <Link sx={style.title} to={`anime/${props.item.mal_id}`}>
                         {props.item.title}
                     </Link>
                 </Typography>
 
             </Box>
             <Switch>
-                <Route path={`${path}/:${props.item.mal_id}`} children={<AnimePage/>}/>
+                <Route path={`anime/:${props.item.mal_id}`} children={<AnimePage/>}/>
             </Switch>
         </Box>
 
