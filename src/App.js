@@ -2,45 +2,24 @@ import './App.css';
 import React, {useEffect, useState} from "react";
 import {AnimeList} from "./components/AnimeList";
 import {Box, CircularProgress, Pagination} from "@mui/material";
-import API from "./API";
+import {useAppDispatch, useAppSelector} from "./hooks/redux";
+import {fetchAllGenres, fetchAnimelist} from "./store/reducers/ActionCreators";
+import axios from "axios";
 
 export const App = ()=> {
-    const [list,setList] = useState()
-    const [isLoading,setIsLoading]= useState(true)
-    const [filter, setFilter] = useState('top')
-    const [currentPage,setCurrentPage] = useState(1)
-    const [hasNextPage, setHasNextPage] = useState(true)
 
-    useEffect(()=>{
+    const dispatch = useAppDispatch()
+    const {animeList,currentPage,hasNextPage,isLoading,error} =  useAppSelector(state=> state.animeReducer)
+
+    useEffect( () => {
+
+        dispatch(fetchAnimelist())
     },[])
 
-    useEffect(()=>{
-        fetchFilterData(1,filter)
-    },[filter])
-
-    function fetchFilterData(page,filter){
-        setIsLoading(true)
-        API.fetchFilterData(page,filter)
-            .then(animelist =>  {
-                setList(animelist.data)
-                setCurrentPage(Number(animelist.pagination.current_page))
-                setHasNextPage(animelist.pagination.has_next_page)
-                setIsLoading(false)
-            })
 
 
-    }
-
-    function fetchInputData(page,text){
-        setIsLoading(true)
-        API.fetchInputData(page,text).then(animelist=>{
-            setList(animelist.data)
-            setCurrentPage(Number(animelist.pagination.current_page))
-            setHasNextPage(animelist.pagination.has_next_page)
-            setIsLoading(false)
-        })
-
-    }
+    console.log('currnetPAge',currentPage)
+    console.log('hasNextpage',hasNextPage)
 
     const style = {
         pagination:{
@@ -51,16 +30,16 @@ export const App = ()=> {
         }
     }
     const handleChange = (event,page)=>{
-        fetchFilterData(page,'top')
+        dispatch(fetchAnimelist(page))
     }
 
   return (
     <div className="App">
 
 
-        {!isLoading?(
+        {!isLoading? (
             <>
-                <AnimeList list={list}/>
+                <AnimeList list={animeList}/>
                 <Pagination
                     sx={style.pagination}
                     page={currentPage}

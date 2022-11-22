@@ -1,16 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {
-    useParams, useRouteMatch
-} from "react-router-dom";
+    useParams} from "react-router-dom";
 import API from "../API";
 import {
     Box, CircularProgress,
-    Container,
-    Rating, Table,
+    Container, Table,
     TableBody,
     TableCell,
     TableContainer,
-    TableHead,
     TableRow,
     Typography
 } from "@mui/material";

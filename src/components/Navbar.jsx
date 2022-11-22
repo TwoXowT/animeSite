@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {AppBar, Box, Button, Input, InputBase, TextField, Typography} from "@mui/material";
-import {Link, Route, Switch, useRouteMatch} from "react-router-dom";
-import { Redirect ,useHistory} from 'react-router-dom';
-import {SearchPage} from "./SearchPage";
-import {AnimePage} from "./AnimePage";
+import { Box, InputBase} from "@mui/material";
+import {Link, useRouteMatch} from "react-router-dom";
+import {useHistory} from 'react-router-dom';
+import {useAppDispatch} from "../hooks/redux";
+import {fetchByName} from "../store/reducers/ActionCreators";
 export const Navbar = ()=>{
 
-
+    const dispatch = useAppDispatch()
     const style = {
         container:{
             display: 'flex',
             flexFlow: 'row wrap',
-            width: '100vw',
             justifyContent: 'center',
             height: '50px',
             backgroundColor:  '#6786e3',
@@ -43,9 +42,14 @@ export const Navbar = ()=>{
     let history = useHistory()
     function handleKeyDown(e){
         if (e.key === "Enter") {
+
+            const data = [text,1]
+            dispatch(fetchByName({data}))
             let query = `${path}search`
             setText('')
+
             history.push(query,text)
+
 
         }
 
@@ -59,6 +63,9 @@ export const Navbar = ()=>{
             <Box sx={style.linkGroup}>
                 <Link  to='/search'>
                     <Box>Genre</Box>
+                </Link>
+                <Link  to='/favorite'>
+                    <Box>Favorite</Box>
                 </Link>
                 <Link  to='/anime'>
                     <Box>Anime</Box>

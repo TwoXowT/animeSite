@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Box, Container, Typography} from "@mui/material";
 import {Link, useRouteMatch, Switch,
     Route,} from "react-router-dom";
-import {AnimePage} from "./AnimePage";
+import {AnimePage} from "../pages/AnimePage";
 
 export const AnimeCard = (props)=>{
     const [isHover, setIsHover] = useState(false)
@@ -24,6 +24,13 @@ export const AnimeCard = (props)=>{
             transition: '0.4s',
             filter: isHover ? ('brightness(70%)'):(''),
         },
+        score:{
+            position: 'absolute',
+            color: 'white',
+            fontSize: '20px',
+            fontWeight: '700',
+
+        }
 
 
     }
@@ -38,7 +45,7 @@ export const AnimeCard = (props)=>{
 
 return(
         <Box sx={style.container}>
-
+            <Typography sx={style.score}>{props.item.score}</Typography>
             <Link to={`anime/${props.item.mal_id}`}>
                 <Box component='img'
                      onMouseEnter={handleMouseEnter}
@@ -46,6 +53,7 @@ return(
                      sx={style.image}
                      src={props.item.images.jpg.image_url}
                 />
+
             </Link>
             <Box sx={style.info_container}>
                 <Typography variant="p" sx={style.title}>

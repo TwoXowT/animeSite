@@ -1,8 +1,8 @@
-import {BrowserRouter, Link,  Route,Switch} from "react-router-dom";
+import {BrowserRouter, Route,Switch} from "react-router-dom";
 import {App} from "../App";
-import {AnimePage} from "./AnimePage";
+import {AnimePage} from "../pages/AnimePage";
 import {Navbar} from "./Navbar";
-import {SearchPage} from "./SearchPage";
+import {SearchPage} from "../pages/SearchPage";
 
 
 export const Root = ()=>{
