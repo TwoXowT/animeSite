@@ -1,12 +1,20 @@
-import React, {useState} from 'react';
-import {Box, Container, Typography} from "@mui/material";
+import React, {useEffect, useState} from 'react';
+import {Box, Button, Checkbox, Container, Typography} from "@mui/material";
 import {Link, useRouteMatch, Switch,
     Route,} from "react-router-dom";
-import {AnimePage} from "./AnimePage";
+import {AnimePage} from "../pages/AnimePage";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {addFavorite, removeFavorite} from "../store/reducers/UserSlice";
+import {Favorite} from "@mui/icons-material";
+
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+
 
 export const AnimeCard = (props)=>{
+    const {favoriteAnime} =  useAppSelector(state=> state.userReducer)
     const [isHover, setIsHover] = useState(false)
-
+    const dispatch = useAppDispatch()
     let { path, url } = useRouteMatch();
     const style = {
         container: {
@@ -15,8 +23,7 @@ export const AnimeCard = (props)=>{
         },
 
         title:{
-            width: 'inherit',
-            wordWrap: 'break-word',
+            width: '100%',
         },
 
         image:{
@@ -25,6 +32,13 @@ export const AnimeCard = (props)=>{
             transition: '0.4s',
             filter: isHover ? ('brightness(70%)'):(''),
         },
+        score:{
+            position: 'absolute',
+            color: 'white',
+            fontSize: '20px',
+            fontWeight: '700',
+
+        }
 
 
     }
@@ -36,27 +50,62 @@ export const AnimeCard = (props)=>{
     function handleMouseLeave() {
         setIsHover(false)
     }
+    function handleChange(e) {
+        setChecked(e.target.checked)
+    }
+
+    const [checked,setChecked] = useState(initialChecked)
+
+    function initialChecked(){
+        return !!favoriteAnime.includes(props.item);
+
+    }
+
+
+    useEffect(()=>{
+        if(checked){
+            if(!favoriteAnime.includes(props.item)){
+                console.log('trues')
+                dispatch(addFavorite(props.item))
+            }
+        }else{
+            if(favoriteAnime.includes(props.item)){
+                dispatch(removeFavorite(props.item))
+            }
+        }
+    },[checked])
+
+
 
 return(
         <Box sx={style.container}>
-            <Link to={`${url}/${props.item.mal_id}`}>
+            <Typography sx={style.score}>{props.item.score}</Typography>
+            <Link to={`anime/${props.item.mal_id}`}>
                 <Box component='img'
                      onMouseEnter={handleMouseEnter}
                      onMouseLeave={handleMouseLeave}
                      sx={style.image}
                      src={props.item.images.jpg.image_url}
                 />
+
             </Link>
             <Box sx={style.info_container}>
                 <Typography variant="p" sx={style.title}>
-                    <Link to={`${url}/${props.item.mal_id}`}>
+                    <Link sx={style.title} to={`anime/${props.item.mal_id}`}>
                         {props.item.title}
                     </Link>
                 </Typography>
 
+                <Checkbox
+                    onChange={handleChange}
+                    checked={checked}
+                    icon={<BookmarkBorderIcon />}
+                    checkedIcon={<BookmarkIcon />}
+                />
+
             </Box>
             <Switch>
-                <Route path={`${path}/:${props.item.mal_id}`} children={<AnimePage/>}/>
+                <Route path={`anime/:${props.item.mal_id}`} children={<AnimePage/>}/>
             </Switch>
         </Box>
 

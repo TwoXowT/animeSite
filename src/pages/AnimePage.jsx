@@ -1,22 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {
-    useParams
-} from "react-router-dom";
+    useParams} from "react-router-dom";
 import API from "../API";
 import {
     Box, CircularProgress,
-    Container,
-    Rating, Table,
+    Container, Table,
     TableBody,
     TableCell,
     TableContainer,
-    TableHead,
     TableRow,
     Typography
 } from "@mui/material";
 
 export const AnimePage = () => {
+
     let {mal_id} = useParams();
+
     const [isLoading, setIsLoading] = useState(true)
     const [data, setData] = useState()
 

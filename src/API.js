@@ -24,7 +24,7 @@ class API {
 
     static fetchAnimeInfo(id){
         return new Promise((resolve,reject) => {
-            fetch(`https://api.jikan.moe/v4/anime/${id}`)
+            fetch(`${this.BASE_URL}anime/${id}`)
                 .then((response) => response.json())
                 .then((animeDetails) => {
                     resolve(animeDetails.data)
@@ -32,11 +32,9 @@ class API {
         })
     }
 
-
     static  fetchInputData(page,text){
         return  new Promise((resolve,reject) =>{
-            console.log(`FETCH INPUT https://api.jikan.moe/v4/anime?q=${text}?page=${page}`)
-            fetch(`https://api.jikan.moe/v4/anime?q=${text}?page=${page}`)
+            fetch(`${this.BASE_URL}anime?q=${text}?page=${page}`)
                 .then((response) => response.json())
                 .then((animelist) =>{
                     resolve(animelist)
