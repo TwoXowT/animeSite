@@ -1,8 +1,10 @@
 import {combineReducers} from "redux";
 import {configureStore} from "@reduxjs/toolkit";
-import animeReducer from './reducers/AnimeSlice'
+import animeReducer from './reducers/AnimeSlice';
+import userReducer from './reducers/UserSlice';
+
 const rootReducer = combineReducers({
-    animeReducer
+    animeReducer, userReducer
 })
 
 export const setupStore=()=>{

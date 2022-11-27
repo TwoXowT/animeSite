@@ -3,8 +3,7 @@ import React, {useEffect, useState} from "react";
 import {AnimeList} from "./components/AnimeList";
 import {Box, CircularProgress, Pagination} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "./hooks/redux";
-import {fetchAllGenres, fetchAnimelist} from "./store/reducers/ActionCreators";
-import axios from "axios";
+import { fetchAnimelist} from "./store/reducers/ActionCreators";
 
 export const App = ()=> {
 
@@ -12,14 +11,8 @@ export const App = ()=> {
     const {animeList,currentPage,hasNextPage,isLoading,error} =  useAppSelector(state=> state.animeReducer)
 
     useEffect( () => {
-
         dispatch(fetchAnimelist())
     },[])
-
-
-
-    console.log('currnetPAge',currentPage)
-    console.log('hasNextpage',hasNextPage)
 
     const style = {
         pagination:{

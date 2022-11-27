@@ -1,4 +1,4 @@
-import {IUser} from "../../models/IUser";
+
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchAllGenres, fetchAnimelist, fetchByName, fetchByParams} from "./ActionCreators";
 interface  AnimeState {
