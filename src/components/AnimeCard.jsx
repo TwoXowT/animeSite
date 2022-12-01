@@ -1,42 +1,44 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Button, Checkbox, Container, Typography} from "@mui/material";
+import {Box, Checkbox,IconButton, ImageListItem, ImageListItemBar} from "@mui/material";
 import {Link, useRouteMatch, Switch,
     Route,} from "react-router-dom";
 import {AnimePage} from "../pages/AnimePage";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {addFavorite, removeFavorite} from "../store/reducers/UserSlice";
-import {Favorite} from "@mui/icons-material";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 
 export const AnimeCard = (props)=>{
     const {favoriteAnime} =  useAppSelector(state=> state.userReducer)
     const [isHover, setIsHover] = useState(false)
     const dispatch = useAppDispatch()
-    let { path, url } = useRouteMatch();
+    const [checked,setChecked] = useState(initialChecked)
+    function initialChecked(){
+        return !!favoriteAnime.includes(props.item);
+
+    }
+
+
     const style = {
-        container: {
-            width: '200px',
-            padding: '10px 10px',
-        },
 
-        title:{
-            width: '100%',
+        container:{
+            margin: '5px',
+            transition: '0.3s',
+            boxShadow: checked ? ('0px 0px 10px 1px purple'):('')
         },
-
         image:{
             width: '200px',
             height: '300px',
             transition: '0.4s',
             filter: isHover ? ('brightness(70%)'):(''),
         },
-        score:{
+        favorite:{
             position: 'absolute',
             color: 'white',
-            fontSize: '20px',
             fontWeight: '700',
+            zIndex: '1',
 
         }
 
@@ -54,13 +56,6 @@ export const AnimeCard = (props)=>{
         setChecked(e.target.checked)
     }
 
-    const [checked,setChecked] = useState(initialChecked)
-
-    function initialChecked(){
-        return !!favoriteAnime.includes(props.item);
-
-    }
-
 
     useEffect(()=>{
         if(checked){
@@ -76,38 +71,58 @@ export const AnimeCard = (props)=>{
     },[checked])
 
 
+    const FavoriteCheckbox = ()=>{
+        return(
+            <Checkbox color='secondary' fontSiza='large'
+                      sx={style.favorite}
+                      onChange={handleChange}
+                      checked={checked}
+                      icon={<FavoriteBorderIcon />}
+                      checkedIcon={<FavoriteIcon />}
+            />
+        )
+    }
+
+
+
+    const Genres = ()=>{
+        return(
+            <>
+                {props.item.genres.map(item=>{
+                    return <span> {item.name} </span>
+                })}
+            </>
+        )
+    }
 
 return(
-        <Box sx={style.container}>
-            <Typography sx={style.score}>{props.item.score}</Typography>
-            <Link to={`anime/${props.item.mal_id}`}>
-                <Box component='img'
-                     onMouseEnter={handleMouseEnter}
-                     onMouseLeave={handleMouseLeave}
-                     sx={style.image}
-                     src={props.item.images.jpg.image_url}
-                />
+    <ImageListItem key={props.item.mal_id} sx={style.container}>
+            <FavoriteCheckbox/>
+        <Link to={`anime/${props.item.mal_id}`}>
+            <Box component='img'
+                         onMouseEnter={handleMouseEnter}
+                         onMouseLeave={handleMouseLeave}
+                         sx={style.image}
+                         src={props.item.images.jpg.image_url}
+                    />
+        </Link>
+        <ImageListItemBar
+            title={props.item.title}
+            subtitle={<Genres/>}
+            actionIcon={
+                <IconButton aria-label={`info about ${props.item.title}`} >
 
-            </Link>
-            <Box sx={style.info_container}>
-                <Typography variant="p" sx={style.title}>
-                    <Link sx={style.title} to={`anime/${props.item.mal_id}`}>
-                        {props.item.title}
-                    </Link>
-                </Typography>
+                </IconButton>
+            }
 
-                <Checkbox
-                    onChange={handleChange}
-                    checked={checked}
-                    icon={<BookmarkBorderIcon />}
-                    checkedIcon={<BookmarkIcon />}
-                />
+        />
+        <Switch>
+                     <Route path={`anime/:${props.item.mal_id}`} children={<AnimePage/>}/>
+        </Switch>
+    </ImageListItem>
 
-            </Box>
-            <Switch>
-                <Route path={`anime/:${props.item.mal_id}`} children={<AnimePage/>}/>
-            </Switch>
-        </Box>
+
+
 
     )
 }
