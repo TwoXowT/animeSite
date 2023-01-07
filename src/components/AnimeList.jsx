@@ -1,7 +1,6 @@
 import React from 'react';
-import {Box, Container, ImageList, Pagination} from "@mui/material";
+import {Container, ImageList} from "@mui/material";
 import {AnimeCard} from "./AnimeCard";
-import {useAppSelector} from "../hooks/redux";
 
 export const AnimeList = (props)=>{
     const style = {

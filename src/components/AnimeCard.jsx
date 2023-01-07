@@ -1,25 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Box, Checkbox,IconButton, ImageListItem, ImageListItemBar} from "@mui/material";
-import {Link, useRouteMatch, Switch,
-    Route,} from "react-router-dom";
+import {Link, Switch, Route,} from "react-router-dom";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {AnimePage} from "../pages/AnimePage";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {addFavorite, removeFavorite} from "../store/reducers/UserSlice";
-import FavoriteIcon from '@mui/icons-material/Favorite';
-
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 
 export const AnimeCard = (props)=>{
-    const {favoriteAnime} =  useAppSelector(state=> state.userReducer)
+    const {favoriteAnimeId} =  useAppSelector(state=> state.userReducer)
     const [isHover, setIsHover] = useState(false)
     const dispatch = useAppDispatch()
     const [checked,setChecked] = useState(initialChecked)
     function initialChecked(){
-        return !!favoriteAnime.includes(props.item);
-
+        return !!favoriteAnimeId.includes(props.item.mal_id);
     }
-
 
     const style = {
 
@@ -53,23 +49,15 @@ export const AnimeCard = (props)=>{
         setIsHover(false)
     }
     function handleChange(e) {
+
         setChecked(e.target.checked)
-    }
-
-
-    useEffect(()=>{
-        if(checked){
-            if(!favoriteAnime.includes(props.item)){
-                console.log('trues')
-                dispatch(addFavorite(props.item))
-            }
+        if(e.target.checked){
+            dispatch(addFavorite(props.item))
         }else{
-            if(favoriteAnime.includes(props.item)){
-                dispatch(removeFavorite(props.item))
-            }
+            dispatch(removeFavorite(props.item))
+            console.log('1')
         }
-    },[checked])
-
+    }
 
     const FavoriteCheckbox = ()=>{
         return(

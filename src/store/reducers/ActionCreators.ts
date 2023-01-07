@@ -58,8 +58,9 @@ export const fetchByName= createAsyncThunk(
     async({data}:any)=>{
         try{
             const [text,page] = data
-            const response = await axios.get(`${BASE_URL}anime?q=${text}?page=${page}`)
-            console.log(response.data)
+            console.log('URLI',`${BASE_URL}anime?q=${text}&page=${page}`)
+
+            const response = await axios.get(`${BASE_URL}anime?q=${text}&page=${page}`)
             return response.data
         }catch(e){
             return 'error'

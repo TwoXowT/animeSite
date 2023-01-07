@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {AnimeList} from "../components/AnimeList";
 import {
     Box,
     Button, CircularProgress,
@@ -9,8 +8,9 @@ import {
     Typography,
 } from "@mui/material";
 import {useLocation} from "react-router-dom";
+import {AnimeList} from "../components/AnimeList";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {fetchAllGenres, fetchByName, fetchByParams} from "../store/reducers/ActionCreators";
+import {fetchAllGenres, fetchAnimelist, fetchByName, fetchByParams} from "../store/reducers/ActionCreators";
 
 export const SearchPage = ()=>{
     const dispatch = useAppDispatch()
@@ -28,11 +28,12 @@ export const SearchPage = ()=>{
     },[])
 
     useEffect(()=>{
-        if(location.state){
+        if(location.state === undefined){
+            dispatch(fetchAnimelist())
         }else{
 
         }
-    },[location])
+    },[location.state])
 
     function handleChangeGenre(e){
         if(e.target.value === 'any'){
@@ -56,16 +57,20 @@ export const SearchPage = ()=>{
         setCurrentSort(e.target.value)
     }
 
-    function handleClick(event,page=1){
-        if(location.state){
-            const data = [location.state,page]
-            dispatch(fetchByName({data}))
-            return
-        }
+
+
+    function handleClick(event,page= 1){
+        location.state = null
         const data = [currentGenres,currentYear,page,currentOrder,currentSort]
         dispatch(fetchByParams({data}))
     }
     const handleChange = (event,page)=>{
+        if(location.state){
+            console.log('iamhere')
+            const data = [location.state,page]
+            dispatch(fetchByName({data}))
+            return
+        }
       handleClick(event,page)
     }
 
@@ -198,7 +203,7 @@ export const SearchPage = ()=>{
             </>
 
             {location.state && <h4>Результыт по запросу {location.state}</h4>}
-            {!isLoading?(
+            {(!isLoading && animeList.length !== 0)?(
                 <>
                     <AnimeList list={animeList}/>
                     <Pagination

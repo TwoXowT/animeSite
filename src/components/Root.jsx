@@ -16,6 +16,7 @@ export const Root = ()=>{
                 <Route  path="/anime/:mal_id" component={AnimePage}/>
                 <Route  path="/search" component={SearchPage}/>
                 <Route  path="/favorite" component={FavoritePage}/>
+                <Route path="/search/:id_genre" component={SearchPage}/>
                 <Route >
                    <h1>ERROR</h1>
                 </Route>

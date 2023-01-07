@@ -30,7 +30,6 @@ export const animeSlice = createSlice({
     extraReducers:{
         //FETCHANIMELIST
         [fetchAnimelist.fulfilled.type]:(state,action)=>{
-            console.log('paylod',action.payload)
             state.isLoading = false;
             state.error = '';
             state.animeList = action.payload.data;
@@ -75,10 +74,10 @@ export const animeSlice = createSlice({
 
         //FETCHBYNAME
         [fetchByName.fulfilled.type]:(state,action)=>{
-            state.isLoading = false;
             state.animeList = action.payload.data;
             state.currentPage = action.payload.pagination.current_page;
             state.hasNextPage = action.payload.pagination.has_next_page;
+            state.isLoading = false;
         },
         [fetchByName.pending.type]:(state)=>{
             state.isLoading = true;
