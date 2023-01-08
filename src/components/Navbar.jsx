@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { Box, InputBase} from "@mui/material";
 import {Link, useRouteMatch} from "react-router-dom";
 import {useHistory} from 'react-router-dom';
 import {useAppDispatch} from "../hooks/redux";
 import {fetchByName} from "../store/reducers/ActionCreators";
+
 export const Navbar = ()=>{
 
     const dispatch = useAppDispatch()
@@ -29,6 +30,9 @@ export const Navbar = ()=>{
             backgroundColor: 'white',
             borderRadius: '20px',
             padding: '3px 20px'
+        },
+        input_container:{
+
         }
 
     }

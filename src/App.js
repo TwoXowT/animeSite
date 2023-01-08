@@ -1,9 +1,11 @@
-import './App.css';
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
+import {CircularProgress, Pagination} from "@mui/material";
+
 import {AnimeList} from "./components/AnimeList";
-import {Box, CircularProgress, Pagination} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "./hooks/redux";
 import { fetchAnimelist} from "./store/reducers/ActionCreators";
+
+import './App.css';
 
 export const App = ()=> {
 

@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-    useParams} from "react-router-dom";
-import API from "../API";
+import {useParams} from "react-router-dom";
 import {
     Box, CircularProgress,
     Container, Table,
@@ -11,6 +9,8 @@ import {
     TableRow,
     Typography
 } from "@mui/material";
+
+import API from "../API";
 
 export const AnimePage = () => {
 
