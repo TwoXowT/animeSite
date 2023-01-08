@@ -1,4 +1,4 @@
-import {BrowserRouter, Route,Switch} from "react-router-dom";
+import {HashRouter, Route, Switch} from "react-router-dom";
 import {App} from "../App";
 import {AnimePage} from "../pages/AnimePage";
 import {Navbar} from "./Navbar";
@@ -9,7 +9,7 @@ import {FavoritePage} from "../pages/FavoritePage";
 export const Root = ()=>{
 
     return(
-        <BrowserRouter>
+        <HashRouter>
             <Navbar/>
             <Switch>
                 <Route exact={true} path="/anime" component={App}/>
@@ -21,6 +21,6 @@ export const Root = ()=>{
                    <h1>ERROR</h1>
                 </Route>
             </Switch>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
