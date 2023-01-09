@@ -1,4 +1,4 @@
-import {BrowserRouter Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {App} from "../App";
 import {AnimePage} from "../pages/AnimePage";
 import {Navbar} from "./Navbar";

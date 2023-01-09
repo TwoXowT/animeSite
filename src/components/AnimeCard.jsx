@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, Checkbox,IconButton, ImageListItem, ImageListItemBar} from "@mui/material";
 import {Link, Switch, Route,} from "react-router-dom";
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -14,7 +14,10 @@ export const AnimeCard = (props)=>{
     const dispatch = useAppDispatch()
     const [checked,setChecked] = useState(initialChecked)
     function initialChecked(){
-        return !!favoriteAnimeId.includes(props.item.mal_id);
+        if(favoriteAnimeId){
+            return !!favoriteAnimeId.includes(props.item.mal_id);
+        }
+        return false
     }
 
     const style = {
@@ -45,23 +48,25 @@ export const AnimeCard = (props)=>{
         setIsHover(true)
     }
 
+    useEffect(()=>{
+       setChecked(!!favoriteAnimeId.includes(props.item.mal_id))
+    },[checked])
+
     function handleMouseLeave() {
         setIsHover(false)
     }
     function handleChange(e) {
-
-        setChecked(e.target.checked)
         if(e.target.checked){
             dispatch(addFavorite(props.item))
         }else{
             dispatch(removeFavorite(props.item))
-            console.log('1')
         }
+        setChecked(e.target.checked)
     }
 
     const FavoriteCheckbox = ()=>{
         return(
-            <Checkbox color='secondary' fontSiza='large'
+            <Checkbox color='secondary' fontSize='large'
                       sx={style.favorite}
                       onChange={handleChange}
                       checked={checked}
@@ -76,8 +81,8 @@ export const AnimeCard = (props)=>{
     const Genres = ()=>{
         return(
             <>
-                {props.item.genres.map(item=>{
-                    return <span> {item.name} </span>
+                {props.item.genres.map((item,index)=>{
+                    return <span key={index}> {item.name} </span>
                 })}
             </>
         )

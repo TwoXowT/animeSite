@@ -13,8 +13,8 @@ interface  UserState {
 const initialState: UserState = {
     email: '',
     passw: '',
-    favoriteAnime: JSON.parse(<string>localStorage.getItem('favoriteAnime')),
-    favoriteAnimeId: JSON.parse(<string>localStorage.getItem('favoriteAnimeId')),
+    favoriteAnime: JSON.parse(<string>localStorage.getItem('favoriteAnime')) || [],
+    favoriteAnimeId: JSON.parse(<string>localStorage.getItem('favoriteAnimeId')) || [],
 }
 
 function init(){
@@ -42,10 +42,8 @@ export const UserSlice = createSlice({
             localStorage.setItem('favoriteAnimeId',JSON.stringify(state.favoriteAnimeId))
         },
         removeFavorite: (state,action)=>{
-            const index = state.favoriteAnime.findIndex((item)=>item.mal_id === action.payload.mal_id)
-            state.favoriteAnime.splice(index,1)
-            const index1 = state.favoriteAnimeId.findIndex((item)=>item === action.payload.mal_id)
-            state.favoriteAnimeId.splice(index1,1)
+            state.favoriteAnime = state.favoriteAnime.filter(item=>{ return item.mal_id !== action.payload.mal_id})
+            state.favoriteAnimeId = state.favoriteAnimeId.filter(item=>{ return item !== action.payload.mal_id})
             localStorage.setItem('favoriteAnime',JSON.stringify(state.favoriteAnime))
             localStorage.setItem('favoriteAnimeId',JSON.stringify(state.favoriteAnimeId))
         }

@@ -4,7 +4,6 @@ import {AnimeList} from "../components/AnimeList";
 
 export const FavoritePage = ()=>{
     const {favoriteAnime} =  useAppSelector(state=> state.userReducer)
-    console.log('data',favoriteAnime)
     return(
         <>
 

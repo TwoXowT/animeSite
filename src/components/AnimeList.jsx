@@ -10,7 +10,6 @@ export const AnimeList = (props)=>{
         justifyContent: 'center',
 
     }
-    console.log('ANIMELIST', props.list)
     return(
         <Container>
             <ImageList sx={style}>
