@@ -48,13 +48,14 @@ export const AnimeCard = (props)=>{
         setIsHover(true)
     }
 
+    function handleMouseLeave() {
+        setIsHover(false)
+    }
     useEffect(()=>{
        setChecked(!!favoriteAnimeId.includes(props.item.mal_id))
     },[checked])
 
-    function handleMouseLeave() {
-        setIsHover(false)
-    }
+
     function handleChange(e) {
         if(e.target.checked){
             dispatch(addFavorite(props.item))
