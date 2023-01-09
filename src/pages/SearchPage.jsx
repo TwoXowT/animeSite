@@ -78,7 +78,7 @@ export const SearchPage = ()=>{
         return(
             <FormControl sx={style.form_control}>
 
-                <InputLabel id="genre">Genre</InputLabel>
+                <InputLabel id='genre'>Genre</InputLabel>
                 <Select sx={style.select}
                         autoWidth
                         labelId='genre'
@@ -86,10 +86,11 @@ export const SearchPage = ()=>{
                         value={currentGenres}
                         onChange={handleChangeGenre}
                 >
+                    <MenuItem value='any'>Any</MenuItem>
                     {genres.map((item,index)=>{
                         return <MenuItem key={index} value={item.mal_id}>{item.name}</MenuItem>
                     })}
-                    <MenuItem value='any'>Any</MenuItem>
+
                 </Select>
             </FormControl>
 
@@ -158,8 +159,9 @@ export const SearchPage = ()=>{
 
     const style = {
         container: {
-
+            display: 'flex',
             margin: '10px auto',
+            flexFlow: 'column wrap'
 
         },
 
@@ -168,19 +170,23 @@ export const SearchPage = ()=>{
             color: 'black',
         },
         pagination:{
-            paddingTop: '100px',
+            paddingTop: '50px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
         },
         params_container:{
             flexFlow:'row wrap',
-            width: '60%',
+            width: '100%',
             display: 'flex',
-            justifyContent: 'space-between'
+            justifyContent: 'flex-start'
         },
         form_control:{
             margin: '10px 10px'
+        },
+        button:{
+            margin: '5px 0px',
+            width: '200px',
         }
     }
     return(
@@ -196,7 +202,7 @@ export const SearchPage = ()=>{
 
                     </Box>
 
-                    <Button variant="outlined" onClick={handleClick}>Search</Button>
+                    <Button sx={style.button} variant="outlined" onClick={handleClick}>Search</Button>
 
                 </Container>
 

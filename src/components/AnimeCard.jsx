@@ -10,7 +10,6 @@ import {addFavorite, removeFavorite} from "../store/reducers/UserSlice";
 
 export const AnimeCard = (props)=>{
     const {favoriteAnimeId} =  useAppSelector(state=> state.userReducer)
-    const [isHover, setIsHover] = useState(false)
     const dispatch = useAppDispatch()
     const [checked,setChecked] = useState(initialChecked)
     function initialChecked(){
@@ -31,7 +30,9 @@ export const AnimeCard = (props)=>{
             width: '200px',
             height: '300px',
             transition: '0.4s',
-            filter: isHover ? ('brightness(70%)'):(''),
+            '&:hover':{
+                filter:'brightness(70%)'
+            }
         },
         favorite:{
             position: 'absolute',
@@ -44,17 +45,11 @@ export const AnimeCard = (props)=>{
 
     }
 
-    function handleMouseEnter() {
-        setIsHover(true)
-    }
-
     useEffect(()=>{
        setChecked(!!favoriteAnimeId.includes(props.item.mal_id))
     },[checked])
 
-    function handleMouseLeave() {
-        setIsHover(false)
-    }
+
     function handleChange(e) {
         if(e.target.checked){
             dispatch(addFavorite(props.item))
@@ -93,8 +88,7 @@ return(
             <FavoriteCheckbox/>
         <Link to={`anime/${props.item.mal_id}`}>
             <Box component='img'
-                         onMouseEnter={handleMouseEnter}
-                         onMouseLeave={handleMouseLeave}
+
                          sx={style.image}
                          src={props.item.images.jpg.image_url}
                     />

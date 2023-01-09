@@ -13,23 +13,29 @@ export const Navbar = ()=>{
             display: 'flex',
             flexFlow: 'row wrap',
             justifyContent: 'center',
-            height: '50px',
+            padding:'10px 0px ',
+            height: 'auto',
             backgroundColor:  '#6786e3',
             alignItems: 'center',
         },
         linkGroup:{
             width: '300px',
             display: 'flex',
+            padding: '5px 10px',
             fontSize: '20px',
             flexFlow: 'row',
             justifyContent: 'space-between'
+        },
+        link:{
+            textDecoration: 'none',
+            color: '#fafafa',
         },
 
         input:{
             width: '300px',
             backgroundColor: 'white',
             borderRadius: '20px',
-            padding: '3px 20px'
+            padding: '5px 20px'
         },
         input_container:{
 
@@ -62,16 +68,20 @@ export const Navbar = ()=>{
     return(
         <Box sx={style.container}>
             <Box sx={style.input_container}>
-                <InputBase sx={style.input} value={text} onChange={handleInput} onKeyDown={handleKeyDown}/>
+                <InputBase sx={style.input} value={text} placeholder='search...' onChange={handleInput} onKeyDown={handleKeyDown}/>
             </Box>
             <Box sx={style.linkGroup}>
-                <Link  to='/search'>
+                <Link style={style.link}
+                    to='/search'>
                     <Box>Genre</Box>
                 </Link>
-                <Link  to='/favorite'>
+                <Link style={style.link}
+                    to='/favorite'>
                     <Box>Favorite</Box>
                 </Link>
-                <Link  to='/anime'>
+                <Link
+                    style={style.link}
+                    to='/anime'>
                     <Box>Anime</Box>
                 </Link>
             </Box>

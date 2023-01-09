@@ -18,7 +18,7 @@ export const App = ()=> {
 
     const style = {
         pagination:{
-            paddingTop: '100px',
+            paddingTop: '50px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
