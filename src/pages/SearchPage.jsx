@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {
     Box,
-    Button, CircularProgress,
+    Button,
     Container, FormControl, InputLabel,
     MenuItem, Pagination,
     Select,
@@ -11,6 +11,7 @@ import {useLocation} from "react-router-dom";
 import {AnimeList} from "../components/AnimeList";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {fetchAllGenres, fetchAnimelist, fetchByName, fetchByParams} from "../store/reducers/ActionCreators";
+import LinearProgress from '@mui/material/LinearProgress';
 
 export const SearchPage = ()=>{
     const dispatch = useAppDispatch()
@@ -192,6 +193,7 @@ export const SearchPage = ()=>{
     return(
         <>
             <>
+                 {(!isLoading && animeList.length !== 0)?(<></>):(<LinearProgress />)}
                 <Container sx={style.container}>
                     <Typography variant='h5'>Search params</Typography>
                     <Box sx={style.params_container}>
@@ -222,7 +224,7 @@ export const SearchPage = ()=>{
                     />
                 </>
 
-            ):(<CircularProgress />)}
+            ):(<></>)}
 
         </>
     )

@@ -1,5 +1,6 @@
 import React, {useEffect} from "react";
 import {CircularProgress, Pagination} from "@mui/material";
+import LinearProgress from '@mui/material/LinearProgress';
 
 import {AnimeList} from "./components/AnimeList";
 import {useAppDispatch, useAppSelector} from "./hooks/redux";
@@ -31,7 +32,6 @@ export const App = ()=> {
   return (
     <div className="App">
 
-
         {!isLoading? (
             <>
                 <AnimeList list={animeList}/>
@@ -44,7 +44,7 @@ export const App = ()=> {
                     boundaryCount={3}
                 />
             </>
-            ):(<CircularProgress />)}
+            ):(<LinearProgress />)}
 
 
     </div>
