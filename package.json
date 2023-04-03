@@ -2,7 +2,7 @@
   "name": "task-manager",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://twoxowt.github.io/task-manager",
+  "homepage": "https://twoxowt.github.io/animeSite/",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -32,7 +32,6 @@
     "sort-by": "^1.2.0",
     "typescript": "^4.9.3",
     "web-vitals": "^2.1.4"
-
   },
   "scripts": {
     "start": "react-scripts start",
